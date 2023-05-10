@@ -1,0 +1,75 @@
+課題2
+
+(1)
+
+cd ~/catkin_ws/src
+
+catkin_create_pkg robot2_task_tachibana rospy std_msgs
+
+launchフォルダ作成
+
+あとはHPに従って編集する。(</ node> ではなく </node> としたらなんかエラー出るけどGazebo開く)
+
+roslaunch robot2_task_tachibana turtlebot3_kadai6_world.launch
+
+(2)
+
+rviz
+
+あとはHPに従って、addしていく。
+
+(3)
+
+キーボードでの動かし方が分からない...
+
+(4)
+
+rvizフォルダ作成
+
+rvizファイルを保存
+
+<node name="rviz" pkg="rviz" type="rviz" args="-d $(find robot2_task_tachibana)/rviz/setting_of_rviz.rviz"/>
+
+をlaunchファイルに追記する
+
+<arg name="gui" value="false"/>
+
+と変更する。
+
+(5)
+
+とくになし。ボタンを押してからクリックすることを忘れないように注意!!!
+
+(6)
+
+rostopic type /move_base_simple/goal
+
+geometry_msgs/PoseStamped
+
+より、メッセージタイプがわかる。
+
+あとは頑張ってpyファイルを作成する
+
+(7)
+
+<node
+    pkg="robot2_task_tachibana"
+    type="control_program.py"
+    name="v_and_w"
+    output="log"
+  />
+
+をlaunchファイルに追記する
+
+以下コマンド
+
+cd ~/catkin_ws/src/robot2_task_tachibana/src
+
+chmod +x control_program.py
+
+rosrun robot2_task_tachibana control_program.py
+
+roslaunch robot2_task_tachibana turtlebot3_kadai6_world.launch
+
+
+

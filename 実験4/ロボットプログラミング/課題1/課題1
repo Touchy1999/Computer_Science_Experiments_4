@@ -1,0 +1,113 @@
+HPの配信者、購読者のコマンド
+
+cd ~/catkin_ws/src/robot1_work_tachibana/src
+
+chmod +x hello_listener.py
+
+rosrun robot1_work_tachibana hello_listener.py
+
+chmod +x hello_talker.py
+
+rosrun robot1_work_tachibana hello_talker.py
+
+(1)
+
+roslaunch turtlebot3_gazebo turtlebot3_empty_world.launch
+
+を実行すると、Gazeboが開く。
+コンソールに
+
+rosnode list
+
+を実行すると、	
+
+/gazebo
+/gazebo_gui
+/rosout
+
+と表示される。
+
+rostopic list
+
+を実行すると、	
+
+/clock
+/cmd_vel
+/imu
+/odom
+/rosout
+/rosout_agg
+/scan
+
+と表示される。
+
+(2)
+
+rostopic type /cmd_vel
+
+とコンソールに打つと、
+
+geometry_msgs/Twist
+
+と表示される。これがメッセージタイプである。
+
+rostopic pub /cmd_vel geometry_msgs/Twist '{linear: {x: 3.5, y: 0, z: 0}, angular: {x: 0, y: 0, z: -1.5}}'
+
+(3)
+
+rosrun teleop_twist_keyboard teleop_twist_keyboard.py
+
+(4)
+
+フォルダ作るだけ...
+
+(5)
+
+robot1_task_tachibana フォルダに location_listener.py を作成する。
+
+rostopic info odom
+
+rosmsg show nav_msgs/Odometry
+
+これで location_listener を書き換える。
+
+以下がコマンドでの操作である。
+
+cd ~/catkin_ws/src/robot1_task_tachibana/src
+
+chmod +x location_listener.py
+
+rosrun robot1_task_tachibana location_listener.py
+
+(6)
+
+(a)
+
+empty_world.launchが含まれているworld_name引数を empty.world から turtlebot3_autorace.world に変更した。
+
+このファイルの名前を turtlebot3_kadai6_world とした。
+
+
+(b)
+
+<node
+    pkg="robot1_task_tachibana"
+    type="location_listener.py"
+    name="location_display"
+    output="log"
+  />
+
+を turtlebot3_kadai6_world に追加する。
+
+roslaunch robot1_task_tachibana turtlebot3_kadai6_world.launch
+
+とコンソールに打つと、x,y座標がコンソールに出力される
+
+
+スクリーンキャストのとり方
+
+Ctrl + Shift + Alt + R で開始、終了
+
+
+
+
